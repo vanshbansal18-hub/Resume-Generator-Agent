@@ -103,7 +103,7 @@ use user profile image from given url: {url}
 final_query = final_prompt + user_query
 
 if st.button("Generate Resume"):
-  with st.spinner("Agent creating Resume...")
+  with st.spinner("Agent creating Resume..."):
     response = agent. invoke({'messages' : [ {'role':'user',"content":final_query}]})
     code = response ['messages' ] [-1] . content [-1] ['text' ]
 
