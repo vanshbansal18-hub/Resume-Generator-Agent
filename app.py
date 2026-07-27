@@ -95,7 +95,7 @@ profile_url = "https://documents.bcci.tv/resizedimageskirti/164_compress.png"
 user_info = st.text_input("Give your information")
 user_photo = st.sidebar.file_uploader("Upload pic", type = 'image/jpeg')
 
-user_query = f"""Give Resume for Python Developer., user details : {user_info}, use user profile image from given url: {url}
+user_query = f"""Give Resume for Python Developer., user details : {user_info}, use user profile image from given url: {user_photo}
 """
 
 final_query = final_prompt + user_query
