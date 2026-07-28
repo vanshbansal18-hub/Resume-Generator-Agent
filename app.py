@@ -11,6 +11,7 @@ from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
 from PIL import Image
 import base64
+st.set_page_config(layout="wide")
 
 #================================FRONTEND=========================
 st.title("AI RESUME MAKER & JOB APPLY AGENT")
@@ -151,8 +152,8 @@ apply link and OUTPUT must be In HTML no markdowns"""
 if st.button('generate resume'):
   with st.spinner("Running Agent"):
 
-    response = agent.invoke({'messages': [{'role':'user','content':query}]})
-    code=response['messages'][-1].content[-1]['text']
+   response = agent.invoke({'messages': [{'role':'user','content':query}]})
+   code=response['messages'][-1].content[-1]['text']
           
    if FILE is not None:
         with open(save_path, "rb") as img_file:
