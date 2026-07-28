@@ -9,17 +9,23 @@ from tavily import TavilyClient
 import numpy as np
 from langchain.messages import SystemMessage, HumanMessage
 from langchain.agents import create_agent
+from PIL import Image
 
 
 #================================FRONTEND=========================
-st.title("AI RESUME GENERATION")
+st.title("AI RESUME MAKER & JOB APPLY AGENT")
+st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrcdV-m0iT1hvzz48rldCoqpufivXvVeBsoVTHaAeO0g&s=10",
+         width=300)
 
 GOOGLE_API_KEY = st.sidebar.text_input("Google Api Key", type = 'password')
 GROQ_API_KEY = st.sidebar.text_input("GROQ Api Key", type = 'password')
 TAVILY_API_KEY = st.sidebar.text_input("TAVILY Api Key", type = 'password')
 
-if not GOOGLE_API_KEY:
-  st.warning("Provide Google API key")
+if not (GOOGLE_API_KEY) and not (GROQ_API_KEY) and not (TAVILY_API_KEY):
+  st.sidebar.warning("Provide API key")
+  st.stop()
+else:
+  st.success("API KEYS LOADED")
 
 
   #====================MODEL and AGENT  CODE===============================
@@ -87,6 +93,31 @@ and must show user input details
 System instructions: Only Give HTML code as output"""
 
 final_prompt = prompt + prompt_reader()
+
+#===================================Upload Image===============================================
+FILE = st.sidebar.file_uploader("Choose an image file",
+                                type=["jpg","jpeg","png","webp"]
+                               )
+
+if FILE is not None:
+  try:
+    image = Image.open(FILE)
+
+    st.sidebar.image(image,
+                     caption="Upload Image",
+                     use_container_width=True)
+
+    if image.mode in ("RGBA", "P"):
+      image = image.convert("RGB")
+
+    base_name = os.path.splitext(FILE.name)[0]
+    save_path = f"{base_name}.jpg"
+
+    image.save(save_path, "JPEG")
+    st.sidebar.success(f"Image successfully saved as '{save_path}'!")
+
+  except Exception as e:
+    st.error(f"Error processing image: {e}")
 
 profile_url = "https://documents.bcci.tv/resizedimageskirti/164_compress.png"
 
