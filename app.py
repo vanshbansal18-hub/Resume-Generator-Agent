@@ -152,7 +152,7 @@ apply link and OUTPUT must be In HTML no markdowns"""
 if st.button('generate resume'):
   with st.spinner("Running Agent"):
 
-   response = agent.invoke({'messages': [{'role':'user','content':query}]})
+   response = agent.invoke({'messages': [{'role':'user','content':job_prompt}]})
    code=response['messages'][-1].content[-1]['text']
           
    if FILE is not None:
